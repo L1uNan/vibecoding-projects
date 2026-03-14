@@ -1,0 +1,51 @@
+[importlinter]
+root_package = <pkg>
+
+[contract:core_independence]
+name = core does not depend on outer layers
+type = forbidden
+source_modules =
+    <pkg>.core
+forbidden_modules =
+    <pkg>.domain
+    <pkg>.services
+    <pkg>.api
+    <pkg>.integrations
+
+[contract:domain_independence]
+name = domain does not depend on outer layers
+type = forbidden
+source_modules =
+    <pkg>.domain
+forbidden_modules =
+    <pkg>.core
+    <pkg>.services
+    <pkg>.api
+    <pkg>.integrations
+
+[contract:services_no_outer]
+name = services must not import api or concrete integrations
+type = forbidden
+source_modules =
+    <pkg>.services
+forbidden_modules =
+    <pkg>.api
+    <pkg>.integrations
+
+[contract:integrations_no_api]
+name = integrations must not import api
+type = forbidden
+source_modules =
+    <pkg>.integrations
+forbidden_modules =
+    <pkg>.api
+
+[contract:api_only_deps_integrations]
+name = only api.deps may import integrations
+type = forbidden
+source_modules =
+    <pkg>.api
+forbidden_modules =
+    <pkg>.integrations
+ignore_imports =
+    <pkg>.api.deps -> <pkg>.integrations

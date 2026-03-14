@@ -1,0 +1,22 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.6
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy (uv)
+        entry: uv run mypy
+        language: system
+        pass_filenames: false
+        types: [python]
+      - id: import-linter
+        name: import-linter (uv)
+        entry: uv run lint-imports
+        language: system
+        pass_filenames: false
+        types: [python]
